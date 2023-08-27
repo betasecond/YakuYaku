@@ -17,7 +17,7 @@ class UISettingsDialog(QDialog):
         layout = QFormLayout()
 
         self.language_combo = QComboBox()
-        for lang in os.listdir('lang'):
+        for lang in os.listdir('../lang'):
             if lang.endswith('.qm'):
                 self.language_combo.addItem(lang[:-3])
         language_label = QLabel(self.tr("界面语言"))

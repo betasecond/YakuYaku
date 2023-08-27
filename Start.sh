@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 将当前目录添加到PYTHONPATH，以便Python可以找到src包
+export PYTHONPATH="$PWD:$PYTHONPATH"
+
 # 设定模型名称
 export MODEL_NAME=LNTW_ja2zh
 # 设定模型的文件夹路径
@@ -17,8 +20,10 @@ export DEVICE=cuda
 # 是否需要将繁体转为简体，如果需要则设置为"--convert_t2s"
 export CONVERT_T2S="--convert_t2s"
 
+# 安装opencc
+pip install opencc
 # 执行 cli.py
-python cli.py \
+python src/cli.py \
     --model-name=$MODEL_NAME \
     --model-dir=$MODEL_DIR \
     --input-text-name="$INPUT_TEXT_NAME" \
@@ -27,5 +32,5 @@ python cli.py \
     --output-text-dir="$OUTPUT_TEXT_DIR" \
     --device=$DEVICE
 
-# 使用 cleaner.py 处理输出文件
-python cleaner.py "$OUTPUT_TEXT_DIR/$OUTPUT_TEXT_NAME" "$OUTPUT_TEXT_DIR/cleaned_$OUTPUT_TEXT_NAME" $CONVERT_T2S
+# 使用 src/cleaner.py 处理输出文件
+python src/cleaner.py "$OUTPUT_TEXT_DIR/$OUTPUT_TEXT_NAME" "$OUTPUT_TEXT_DIR/cleaned_$OUTPUT_TEXT_NAME" $CONVERT_T2S
